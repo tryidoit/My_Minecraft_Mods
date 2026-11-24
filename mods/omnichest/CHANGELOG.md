@@ -2,6 +2,16 @@
 
 OmniChest の主要な修正・変更の記録。新しいエントリを上に追記する。
 
+## [Unreleased] — 26.3 fork
+
+**Minecraft 26.3 対応を追加 (このフォーク独自)。** 既存バージョン (1.21.10 〜 26.2) の挙動は変えていない。
+
+- 26.3 ビルド対象を追加 (Loader 0.19.5 / Fabric API 0.161.0+26.3 / Java 25)。
+- 26.3 の描画クラス移動 (`com.mojang.blaze3d.*` → `com.mojang.renderpearl.api.*`) を版別 import で吸収。
+- SDL 移行に伴い、 GLFW キー定数を `InputConstants` に置換、 `isKeyDown` / `Type.KEYBOARD` の差を吸収。
+- **Fixed**: マウスボタン番号 (0/1/2) の直書きをやめ `InputConstants.MOUSE_BUTTON_*` に統一。 26.3 で行をクリックしても選択されない不具合を修正。
+- `ItemContainerContents#allItemsCopyStream` の削除に対応 (`ContainerContentsCompat`)。
+
 ## [1.8.0]
 
 **Alt シュルカープレビューが、これまで動いていなかった画面でも動くようになった**

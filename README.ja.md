@@ -1,5 +1,23 @@
 [English](README.md) | **日本語**
 
+> # OmniChest 26.3 — OmniChest の Minecraft 26.3 移植版
+>
+> **このリポジトリは、 OmniChest を Minecraft 26.3 (Fabric) に対応させることだけを目的としたフォークです。**
+> フォーク元は 4 つの Mod (OmniChest / VisualizeGate / WorldChange / HyperSlice) をまとめた
+> [private-kajiwara/My_Minecraft_Mods](https://github.com/private-kajiwara/My_Minecraft_Mods) です。
+> **変更しているのは OmniChest のみ**で、 他の 3 つの Mod は upstream のままです (このフォークでは移植・ビルド・保守しません)。
+>
+> - **追加したもの:** OmniChest の `26.3` ビルド対象 (Fabric Loader 0.19.5 / Fabric API 0.161.0+26.3 / Java 25) と、 そのために必要な 26.3 対応
+>   (描画クラスの `com.mojang.renderpearl` への移動、 SDL の入力定数、 マウスボタン番号の直書き廃止、 `ItemContainerContents` の変更)。
+> - **作業場所:** ブランチ [`omnichest-26.3-port`](https://github.com/tryidoit/My_Minecraft_Mods/tree/omnichest-26.3-port) の [`mods/omnichest/`](mods/omnichest/)。
+> - **26.3 の jar をビルド:** `./gradlew build26_3` — 出力は `mods/omnichest/versions/26.3/build/libs/`。
+> - **状態:** 26.3 対応は新しく、 テストは限定的です。 不具合は upstream ではなくこのフォークの issue へ。
+> - **クレジット / ライセンス:** 元の作品はすべて upstream の作者によるもの (CC0 1.0、 [LICENSE](LICENSE) 参照)。 このフォークは 26.3 移植を加えただけです。
+>
+> 以降は upstream のワークスペース README です。
+
+---
+
 # Fabric Mod ワークスペース
 
 複数の Fabric Mod を 1 リポジトリで管理する **Mod 非依存 (mod-agnostic)** の Gradle
@@ -11,7 +29,7 @@ Mod 固有名をハードコードせずに各 Mod をビルドします。
 
 | Mod | 概要 | 版 | 対応 Minecraft | 環境 | ドキュメント |
 |---|---|---|---|---|---|
-| **OmniChest** (`omnichest`) | ストレージ整理支援。倉庫横断のチェスト検索と在世界ピン、スマート預入、カテゴリ整列、スロットロック、チェストテンプレート。 | 1.1.1 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 | client | [README](mods/omnichest/README.md) · [CHANGELOG](mods/omnichest/CHANGELOG.md) |
+| **OmniChest** (`omnichest`) | ストレージ整理支援。倉庫横断のチェスト検索と在世界ピン、スマート預入、カテゴリ整列、スロットロック、チェストテンプレート。 | 1.1.1 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 / **26.3 (this fork)** | client | [README](mods/omnichest/README.md) · [CHANGELOG](mods/omnichest/CHANGELOG.md) |
 | **VisualizeGate** (`visualizegate`) | ネザーポータルの可視化。ゲートを世界の中で枠表示し、どのポータルがどこに繋がるかを予測、3D 点群で俯瞰。 | 1.0.14 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 | client | [README](mods/visualizegate/README.md) · [CHANGELOG](mods/visualizegate/CHANGELOG.md) |
 | **WorldChange** (`worldchange`) | `/worldChange <name:seed>` で、タイトル画面に戻らずゲーム中に別のシングルプレイワールドへ切り替える。 | 0.1.0 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 | client | — |
 | **HyperSlice** (`hyperslice`) | 4 次元 (x, y, z, w) のボクセル世界を、w を整数に離散化した N 枚の custom dimension として実装。全スライスは単一の 4D 地形関数から生成される。 | 0.1.0 | 26.1.2 | client + server | [README](mods/hyperslice/README.md) |

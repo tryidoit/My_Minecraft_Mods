@@ -1,5 +1,23 @@
 **English** | [日本語](README.ja.md)
 
+> # OmniChest 26.3 — a Minecraft 26.3 port of OmniChest
+>
+> **This repository is a fork whose only purpose is OmniChest for Minecraft 26.3 (Fabric).**
+> It is forked from [private-kajiwara/My_Minecraft_Mods](https://github.com/private-kajiwara/My_Minecraft_Mods), a workspace that hosts four separate mods
+> (OmniChest, VisualizeGate, WorldChange, HyperSlice). **Only OmniChest is touched here** — the other three are left exactly as upstream
+> and are **not** ported, built or maintained in this fork.
+>
+> - **What this fork adds:** a `26.3` build target for OmniChest (Fabric Loader 0.19.5, Fabric API 0.161.0+26.3, Java 25), plus the 26.3 fixes it needs
+>   (render classes moved to `com.mojang.renderpearl`, SDL input constants, mouse buttons no longer hardcoded, `ItemContainerContents` change).
+> - **Where the work lives:** branch [`omnichest-26.3-port`](https://github.com/tryidoit/My_Minecraft_Mods/tree/omnichest-26.3-port), under [`mods/omnichest/`](mods/omnichest/). See the [OmniChest README](mods/omnichest/README.md) and [CHANGELOG](mods/omnichest/CHANGELOG.md).
+> - **Build the 26.3 jar:** `./gradlew build26_3` — output in `mods/omnichest/versions/26.3/build/libs/`.
+> - **Status:** 26.3 support is new and lightly tested. Report problems in this fork's issues, not upstream's.
+> - **Credit / license:** all original work is by the upstream author (CC0 1.0, see [LICENSE](LICENSE)). This fork only adds the 26.3 port.
+>
+> The rest of this file is the upstream workspace README, kept for reference.
+
+---
+
 # Fabric Mods Workspace
 
 A **mod-agnostic** Gradle workspace that hosts several Fabric mods in a single repository.
@@ -11,7 +29,7 @@ wrapper) builds all of them without hardcoding a single mod-specific name.
 
 | Mod | What it does | Version | Minecraft | Side | Docs |
 |---|---|---|---|---|---|
-| **OmniChest** (`omnichest`) | Storage organiser: repository-wide chest search with in-world pins, smart deposit, category sorting, slot locks and reusable chest templates. | 1.1.1 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 | client | [README](mods/omnichest/README.md) · [CHANGELOG](mods/omnichest/CHANGELOG.md) |
+| **OmniChest** (`omnichest`) | Storage organiser: repository-wide chest search with in-world pins, smart deposit, category sorting, slot locks and reusable chest templates. | 1.1.1 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 / **26.3 (this fork)** | client | [README](mods/omnichest/README.md) · [CHANGELOG](mods/omnichest/CHANGELOG.md) |
 | **VisualizeGate** (`visualizegate`) | Nether portal visualiser: highlights gates in the world, predicts which portal links to which, and shows a 3D point-cloud overview. | 1.0.14 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 | client | [README](mods/visualizegate/README.md) · [CHANGELOG](mods/visualizegate/CHANGELOG.md) |
 | **WorldChange** (`worldchange`) | Switches to another existing singleplayer world in-game with `/worldChange <name:seed>`, without returning to the title screen. | 0.1.0 | 1.21.10 / 1.21.11 / 26.1 / 26.1.1 / 26.1.2 / 26.2 | client | — |
 | **HyperSlice** (`hyperslice`) | Implements a 4D (x, y, z, w) voxel world as N custom dimensions sliced along an integer `w`, all generated from a single 4D terrain function. | 0.1.0 | 26.1.2 | client + server | [README](mods/hyperslice/README.md) |

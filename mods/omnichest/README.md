@@ -1,5 +1,10 @@
 # OmniChest — Multi-Version Fabric Mod
 
+> **このコピーは「OmniChest 26.3」フォークです。** 上流 [private-kajiwara/My_Minecraft_Mods](https://github.com/private-kajiwara/My_Minecraft_Mods) の
+> OmniChest に Minecraft **26.3** 対応を追加したものです (他の Mod はこのフォークでは扱いません)。
+> 26.3 jar は `./gradlew build26_3` (リポジトリのルートで実行) でビルドします。 26.3 の主な変更点: 描画クラスの
+> `com.mojang.renderpearl` 移動 / SDL 入力定数 / マウスボタン番号の定数化 / `ItemContainerContents` の変更。
+
 Minecraft Fabric MOD「OmniChest」のリポジトリ。
 **1 つのソースツリーから、 世代を跨ぐ複数の Minecraft バージョン向けの jar を自動ビルド**できる構成
 （[Stonecutter](https://stonecutter.kikugie.dev/) ハイブリッド）。
@@ -19,6 +24,7 @@ Minecraft Fabric MOD「OmniChest」のリポジトリ。
 | `1.21.10` / `1.21.11` | 旧世代 (難読化) | 21 | remap | Mojang (Mojmap) | `legacy-1.21.11` の挙動を単一ソースから再現 |
 | `26.1` / `26.1.1` / `26.1.2` | 新世代 (非難読化) | 25 | 非remap | なし | `26.1.2` が推奨。 ソースの基準名はこの世代の公式名 |
 | `26.2` | 新世代 (非難読化) | 25 | 非remap (Loom 1.16.3) | なし | **ビルド可 (`buildable:true`)**。 クライアント描画パイプライン破壊的変更を版別 `//?` で移植済。 下記「26.2」参照 |
+| `26.3` | 新世代 (非難読化) | 25 | 非remap (Loom 1.16.3) | なし | **このフォークで追加**。 Loader 0.19.5 / Fabric API 0.161.0+26.3。 26.2 の `//?` 移植を継承し、 26.3 の描画クラス移動・SDL 入力・マウスボタン定数化に対応 |
 
 > **26.1 系の intermediary / Yarn は設計上「恒久的に提供されない」のが正常**（非難読化のため）。
 > 「マッピング公開待ち」「ビルド不能」と誤結論しないこと。
