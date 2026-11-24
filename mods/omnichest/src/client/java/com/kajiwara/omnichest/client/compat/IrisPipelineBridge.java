@@ -1,6 +1,10 @@
 package com.kajiwara.omnichest.client.compat;
 
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.RenderPipeline;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+//?}
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;

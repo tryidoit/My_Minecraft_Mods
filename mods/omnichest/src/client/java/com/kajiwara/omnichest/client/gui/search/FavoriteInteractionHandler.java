@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.client.gui.search;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.config.data.SearchConfig;
 import com.kajiwara.omnichest.search.SearchIndex;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -52,10 +53,10 @@ public final class FavoriteInteractionHandler {
      */
     public static ClickKind classify(MouseButtonEvent event, SearchConfig cfg) {
         int btn = event.button();
-        if (btn == 1) {
+        if (btn == InputConstants.MOUSE_BUTTON_RIGHT) {
             return cfg.enableFavorites ? ClickKind.TOGGLE_FAVORITE : ClickKind.IGNORE;
         }
-        if (btn == 0) {
+        if (btn == InputConstants.MOUSE_BUTTON_LEFT) {
             // ALT は viewing modifier として透過させる (= 行選択は通常通り発火)。
             return ClickKind.SELECT_ROW;
         }

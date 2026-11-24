@@ -70,6 +70,14 @@
       "recommended": false,
       "buildable": true,
       "notes": "年ベース新バージョニング・非難読化版 (Java 25・非remap Loom 1.16.3)。 クライアント描画パイプライン破壊的変更 (MultiBufferSource/Tesselator/ShapeRenderer 削除→submit/staged 描画系・GUI 改名 mc.gui.*) を版別 //? で本格移植済 (在世界ハイライト/ワイヤー=lines submit・ピン=HUD 2D 投影 stateless でシェーダ下可視・検索ビーコン=バニラ submitBeaconBeam・チェスト GUI=開時 GUIスケール clamp 再適用)。 user 実機 (Iris シェーダ ON) でピン/ビーコン/チェスト GUI レイアウト確認済。 held 解除 (buildable:true)。 26.1.x はバイト一致維持。"
+    },
+    {
+      "minecraft": "26.3",
+      "properties": "26.3.properties",
+      "stable": true,
+      "recommended": false,
+      "buildable": true,
+      "notes": "26.2 系の次 (Wilderness Bound)・非難読化版 (Java 25・非remap Loom)。 //? >=26.2 の描画移植をそのまま継承し、 SDL 移行に伴う入力定数 (GLFW→InputConstants) のみ追加対応。 26.1.x / 26.2 のロジックは不変。"
     }
   ],
 

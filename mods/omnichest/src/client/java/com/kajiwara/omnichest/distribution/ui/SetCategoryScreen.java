@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.distribution.ui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.classify.ClassificationCache;
 import com.kajiwara.omnichest.classify.StorageCategory;
 import com.kajiwara.omnichest.client.gui.ScreenBackdrop;
@@ -23,7 +24,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -319,12 +319,12 @@ public final class SetCategoryScreen extends Screen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.key() == InputConstants.KEY_ESCAPE) {
             onClose();
             return true;
         }
         // Tab はフォーカス移動として画面 (Screen) 側に通す。 Esc は上で処理済み。
-        if (event.key() != GLFW.GLFW_KEY_TAB
+        if (event.key() != InputConstants.KEY_TAB
                 && this.nameBox != null && this.nameBox.canConsumeInput()) {
             // 名前欄にフォーカスがある間は、 EditBox が処理しなかったキーも消費する
             // (= 素通りさせると他ハンドラへ届き、 タイプ中に暴発する)。

@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.mixin;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.client.ClientKeyBindings;
 import com.kajiwara.omnichest.client.input.TextInputState;
 import com.kajiwara.omnichest.i18n.Keys;
@@ -236,10 +237,10 @@ public abstract class SlotLockScreenMixin extends Screen {
         boolean isShift = event.hasShiftDown();
 
         SlotLockConfig cfg = SlotLockConfig.get();
-        boolean cycle = (button == 0 && cfg.cycleWithShiftAltClick && isAlt && isShift);
+        boolean cycle = (button == InputConstants.MOUSE_BUTTON_LEFT && cfg.cycleWithShiftAltClick && isAlt && isShift);
         // Alt + 左クリック ジェスチャ。 修飾キー込みのコンボは KeyMapping で表現できないので、
         // 従来どおり SlotLockConfig のトグルで制御する。
-        boolean altToggle = !cycle && (button == 0 && cfg.toggleWithAltClick && isAlt && !isShift);
+        boolean altToggle = !cycle && (button == InputConstants.MOUSE_BUTTON_LEFT && cfg.toggleWithAltClick && isAlt && !isShift);
         // 再割当可能ホットキー (既定 = 中マウスボタン)。 ボタン番号の直書きはせず KeyMapping に問う。
         // 未割当なら matchesMouse は必ず false = 発火しない & 後段の cancel にも到達しない。
         boolean hotkeyToggle = !cycle && !altToggle && cits_slotLock$hotkeyMatchesMouse(event);

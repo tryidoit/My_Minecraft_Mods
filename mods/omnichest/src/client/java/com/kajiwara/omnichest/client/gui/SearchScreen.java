@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.client.gui;
 
+import com.kajiwara.omnichest.client.compat.InputCompat;
 import com.kajiwara.omnichest.client.gui.search.DisplayModeDropdown;
 import com.kajiwara.omnichest.client.gui.search.FavoriteInteractionHandler;
 import com.kajiwara.omnichest.client.gui.search.FavoritesManager;
@@ -34,7 +35,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import com.mojang.blaze3d.platform.InputConstants;
-import org.lwjgl.glfw.GLFW;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -842,7 +842,7 @@ public class SearchScreen extends Screen {
         SearchConfig cfg = ConfigManager.get().search;
 
         // カテゴリタブクリック処理
-        if (cfg.enableCategoryTabs && event.button() == 0
+        if (cfg.enableCategoryTabs && event.button() == InputConstants.MOUSE_BUTTON_LEFT
                 && SearchCategoryTab.handleClick(this.tabHits, event.x(), event.y(),
                 cat -> {
                     this.currentCategory = cat;
@@ -859,7 +859,7 @@ public class SearchScreen extends Screen {
         double mouseY = event.y();
 
         // タブ列のスクロールバードラッグ開始
-        if (event.button() == 0 && isMouseOverTabScrollbar(mouseX, mouseY)) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isMouseOverTabScrollbar(mouseX, mouseY)) {
             this.draggingTabScroll = true;
             this.tabScrollDragOffsetY = 0; // 簡易: スクロール量を直接マウス位置から計算
             updateTabScrollFromMouse(mouseY);
@@ -867,7 +867,7 @@ public class SearchScreen extends Screen {
         }
 
         // スクロールバー
-        if (event.button() == 0 && isMouseOverScrollbar(mouseX, mouseY)) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isMouseOverScrollbar(mouseX, mouseY)) {
             int handleY = scrollbarHandleY();
             int handleH = scrollbarHandleHeight();
             if (mouseY >= handleY && mouseY < handleY + handleH) {
@@ -887,7 +887,7 @@ public class SearchScreen extends Screen {
                 || mouseY < list.y() || mouseY > list.bottom()) {
             // リスト外の左クリックは sticky preview を解除する (= 通常 GUI の「ダイアログ外をクリックで閉じる」 慣習)。
             // 中ボタン / 右クリックは別系統 (= スクロール / 既存ハンドラ) なので解除しない。
-            if (event.button() == 0 && !this.stickyPreviewStack.isEmpty()) {
+            if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && !this.stickyPreviewStack.isEmpty()) {
                 this.stickyPreviewStack = ItemStack.EMPTY;
             }
             return false;
@@ -897,7 +897,7 @@ public class SearchScreen extends Screen {
                 list.x(), list.y(), list.right(), list.bottom(), this.scrollPx, mouseX, mouseY);
         if (index < 0) {
             // リスト矩形内で行の隙間 (= 行 hit ミス) を左クリックしたケースも、 上と同様に解除する。
-            if (event.button() == 0 && !this.stickyPreviewStack.isEmpty()) {
+            if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && !this.stickyPreviewStack.isEmpty()) {
                 this.stickyPreviewStack = ItemStack.EMPTY;
             }
             return false;
@@ -914,7 +914,7 @@ public class SearchScreen extends Screen {
         //   - 通常アイテム (= 中身を持たない) なら何もしない (= 誤動作で空 popup を出さない)
         // ホイールクリックはバニラ MC 検索 GUI で別用途に当たっていないので、
         // この単独入力で奪っても既存挙動に衝突しない (= 行クリック左/右、 スクロール ホイール は無傷)。
-        if (event.button() == 2) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_MIDDLE) {
             ItemStack rowStack = clicked.stack();
             if (!rowStack.isEmpty() && RecursiveContainerHelper.isContainerItem(rowStack)) {
                 boolean sameAsPinned = !this.stickyPreviewStack.isEmpty()
@@ -1014,8 +1014,8 @@ public class SearchScreen extends Screen {
      */
     private static boolean isShiftDown() {
         var window = Minecraft.getInstance().getWindow();
-        return InputConstants.isKeyDown(window, InputConstants.KEY_LSHIFT)
-                || InputConstants.isKeyDown(window, InputConstants.KEY_RSHIFT);
+        return InputCompat.isKeyDown(window, InputConstants.KEY_LSHIFT)
+                || InputCompat.isKeyDown(window, InputConstants.KEY_RSHIFT);
     }
 
     @Override
@@ -1033,8 +1033,8 @@ public class SearchScreen extends Screen {
 
     @Override
     public boolean mouseReleased(MouseButtonEvent event) {
-        if (event.button() == 0 && this.draggingTabScroll) this.draggingTabScroll = false;
-        if (event.button() == 0 && this.draggingScroll) this.draggingScroll = false;
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && this.draggingTabScroll) this.draggingTabScroll = false;
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && this.draggingScroll) this.draggingScroll = false;
         return super.mouseReleased(event);
     }
 
@@ -1078,7 +1078,7 @@ public class SearchScreen extends Screen {
                 return true;
             }
         }
-        if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.key() == InputConstants.KEY_ESCAPE) {
             // ESC は「外側 → 内側」 で段階的にキャンセル: sticky preview が出ているなら
             // 先にそれを閉じ、 画面ごと閉じない (= バニラ寄りの 1 ステップ ESC 慣習)。
             if (!this.stickyPreviewStack.isEmpty()) {
@@ -1095,16 +1095,16 @@ public class SearchScreen extends Screen {
         // 修飾なしの W / S / D は従来どおり SearchBox に流れ、 検索クエリへの通常タイプとして扱う。
         if (isAltDown()) {
             int k = event.key();
-            if (k == GLFW.GLFW_KEY_W) {
+            if (k == InputConstants.KEY_W) {
                 selectAllVisibleResults();
                 return true;
             }
-            if (k == GLFW.GLFW_KEY_S) {
+            if (k == InputConstants.KEY_S) {
                 this.selectedRows.clear();
                 this.selectionAnchorKey = null;   // 全解除でアンカーもリセット (= 次の Shift は通常クリック扱い)。
                 return true;
             }
-            if (k == GLFW.GLFW_KEY_D) {
+            if (k == InputConstants.KEY_D) {
                 deselectHoveredRow();
                 return true;
             }
@@ -1115,7 +1115,7 @@ public class SearchScreen extends Screen {
         }
 
         // Tab はフォーカス移動として画面 (Screen) 側に通す。 Esc は上で処理済み。
-        if (event.key() != GLFW.GLFW_KEY_TAB
+        if (event.key() != InputConstants.KEY_TAB
                 && this.searchBox != null && this.searchBox.canConsumeInput()) {
             // 検索欄にフォーカスがある間は、 EditBox が処理しなかったキーも <b>消費</b> する。
             // 素通りさせると mod / バニラの他ハンドラに届いてしまう (= タイプ中の暴発)。
@@ -1454,7 +1454,7 @@ public class SearchScreen extends Screen {
      */
     private static boolean isAltDown() {
         var window = Minecraft.getInstance().getWindow();
-        return InputConstants.isKeyDown(window, InputConstants.KEY_LALT)
-                || InputConstants.isKeyDown(window, InputConstants.KEY_RALT);
+        return InputCompat.isKeyDown(window, InputConstants.KEY_LALT)
+                || InputCompat.isKeyDown(window, InputConstants.KEY_RALT);
     }
 }

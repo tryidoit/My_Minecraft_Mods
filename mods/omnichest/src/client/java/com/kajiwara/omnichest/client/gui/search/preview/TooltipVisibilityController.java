@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.client.gui.search.preview;
 
+import com.kajiwara.omnichest.client.compat.InputCompat;
 import com.kajiwara.omnichest.config.ConfigManager;
 import com.kajiwara.omnichest.search.nested.RecursiveContainerHelper;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -59,7 +60,7 @@ public final class TooltipVisibilityController {
     /** ALT (左右いずれか) が押されているか。 既存コード (Shift 判定) と同じ方式。 */
     private static boolean isAltDown() {
         var window = Minecraft.getInstance().getWindow();
-        return InputConstants.isKeyDown(window, InputConstants.KEY_LALT)
-                || InputConstants.isKeyDown(window, InputConstants.KEY_RALT);
+        return InputCompat.isKeyDown(window, InputConstants.KEY_LALT)
+                || InputCompat.isKeyDown(window, InputConstants.KEY_RALT);
     }
 }

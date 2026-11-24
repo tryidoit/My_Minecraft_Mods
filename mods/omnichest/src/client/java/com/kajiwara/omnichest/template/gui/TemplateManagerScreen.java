@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.template.gui;
 
+import com.kajiwara.omnichest.client.compat.InputCompat;
 import com.kajiwara.omnichest.client.gui.search.layout.ThemeColorResolver;
 import com.kajiwara.omnichest.client.gui.search.layout.UILayoutMetrics;
 import com.kajiwara.omnichest.client.gui.search.preview.AdaptiveTooltipPositioner;
@@ -25,7 +26,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -466,8 +466,8 @@ public class TemplateManagerScreen extends Screen {
     /** ALT が押されているか (= 倉庫検索の同名ヘルパと同じ {@link InputConstants} 経由判定)。 */
     private boolean isAltDown() {
         var window = Minecraft.getInstance().getWindow();
-        return InputConstants.isKeyDown(window, InputConstants.KEY_LALT)
-                || InputConstants.isKeyDown(window, InputConstants.KEY_RALT);
+        return InputCompat.isKeyDown(window, InputConstants.KEY_LALT)
+                || InputCompat.isKeyDown(window, InputConstants.KEY_RALT);
     }
 
     /** カーソル下のテンプレート行を返す (リスト範囲外 / 行なしは null)。 mouseClicked と同じ座標計算。 */
@@ -715,10 +715,10 @@ public class TemplateManagerScreen extends Screen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        if (event.key() == GLFW.GLFW_KEY_ESCAPE)
+        if (event.key() == InputConstants.KEY_ESCAPE)
             return super.keyPressed(event);
         // Tab はフォーカス移動として画面 (Screen) 側に通す。 Esc は上で処理済み。
-        if (event.key() != GLFW.GLFW_KEY_TAB
+        if (event.key() != InputConstants.KEY_TAB
                 && this.searchBox != null && this.searchBox.canConsumeInput()) {
             // 検索欄にフォーカスがある間は、 EditBox が処理しなかったキーも消費する
             // (= 素通りさせると他ハンドラへ届き、 タイプ中に暴発する)。

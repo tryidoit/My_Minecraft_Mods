@@ -9,23 +9,51 @@ import com.kajiwara.omnichest.search.ContainerScanner;
 import com.kajiwara.omnichest.search.ContainerSnapshot;
 import com.kajiwara.omnichest.search.ContainerType;
 import com.kajiwara.omnichest.search.EntityLocator;
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.BlendFunction;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.BlendFunction;
+//?}
 //? if >=26.1 {
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.ColorTargetState;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.ColorTargetState;
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.DepthStencilState;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.DepthStencilState;
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.CompareOp;*/
+//?} else {
 import com.mojang.blaze3d.platform.CompareOp;
+//?}
 //?} else {
 /*import com.mojang.blaze3d.platform.DepthTestFunction;*/
 //?}
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.RenderPipeline;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.UniformType;*/
+//?} else {
 import com.mojang.blaze3d.shaders.UniformType;
+//?}
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.vertex.VertexFormat;*/
+//?} else {
 import com.mojang.blaze3d.vertex.VertexFormat;
+//?}
 //? if >=26.1 {
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;

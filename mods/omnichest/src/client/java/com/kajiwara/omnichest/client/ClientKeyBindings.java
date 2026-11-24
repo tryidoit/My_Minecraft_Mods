@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.client;
 
+import com.kajiwara.omnichest.client.compat.InputCompat;
 import com.kajiwara.omnichest.classify.AutoDepositManager;
 import com.kajiwara.omnichest.client.gui.SearchScreen;
 import com.kajiwara.omnichest.client.input.TextInputState;
@@ -17,7 +18,6 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * Chest Network Search 用キーバインド。
@@ -35,6 +35,13 @@ import org.lwjgl.glfw.GLFW;
  * (誤発火防止)。
  */
 public final class ClientKeyBindings {
+    /** 26.3 (SDL) で {@code Type.KEYSYM} は {@code Type.KEYBOARD} に改名された。 */
+    //? if >=26.3 {
+    /*private static final InputConstants.Type KEY_TYPE = InputConstants.Type.KEYBOARD;*/
+    //?} else {
+    private static final InputConstants.Type KEY_TYPE = InputConstants.Type.KEYSYM;
+    //?}
+
 
     public static final String OPEN_SEARCH_KEY = "key.omnichest.open_search";
     /** Storage Auto Distribution: 倉庫振り分けメニューを開くキー。 デフォルト <b>J</b>。 */
@@ -162,22 +169,22 @@ public final class ClientKeyBindings {
     public static void register() {
         openSearch = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 OPEN_SEARCH_KEY,
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_G,
+                KEY_TYPE,
+                InputConstants.KEY_G,
                 CATEGORY));
 
         // 倉庫振り分けメニュー。デフォルト「J」 (= 検索 G の隣)。
         openDistribution = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 OPEN_DISTRIBUTION_KEY,
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_J,
+                KEY_TYPE,
+                InputConstants.KEY_J,
                 CATEGORY));
 
         // 自動投入プランの一括表示。デフォルト「H」 (= "Home for items")。
         smartDeposit = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 SMART_DEPOSIT_KEY,
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_H,
+                KEY_TYPE,
+                InputConstants.KEY_H,
                 CATEGORY));
 
         // Slot Lock 切替キー。 既定は「中マウスボタン」 (= 従来の固定挙動を既定値として保存)。
@@ -185,28 +192,28 @@ public final class ClientKeyBindings {
         toggleSlotLock = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 TOGGLE_SLOT_LOCK_KEY,
                 InputConstants.Type.MOUSE,
-                GLFW.GLFW_MOUSE_BUTTON_MIDDLE,
+                InputConstants.MOUSE_BUTTON_MIDDLE,
                 CATEGORY));
 
         // Slot Lock 全解除キー (= 未バインド)。
         // 2 回連続押下 (1.5 秒以内) で全ロックを消去する double-tap 仕様。
         clearAllSlotLocks = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 CLEAR_ALL_LOCKS_KEY,
-                InputConstants.Type.KEYSYM,
+                KEY_TYPE,
                 InputConstants.UNKNOWN.getValue(),
                 CATEGORY));
 
         // 選択アイテム HUD の表示トグル (= 未バインドで登録: ユーザーが好みのキーを割当可能)。
         toggleSelectedItemHud = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 TOGGLE_SELECTED_ITEM_HUD_KEY,
-                InputConstants.Type.KEYSYM,
+                KEY_TYPE,
                 InputConstants.UNKNOWN.getValue(),
                 CATEGORY));
 
         // ディメンション別メニューの再割当キー (= 未バインドで登録: 既定は Alt+C ポール)。
         toggleDimensionMenu = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 TOGGLE_DIMENSION_MENU_KEY,
-                InputConstants.Type.KEYSYM,
+                KEY_TYPE,
                 InputConstants.UNKNOWN.getValue(),
                 CATEGORY));
 
@@ -215,8 +222,8 @@ public final class ClientKeyBindings {
         // tick では一切 consume しない: 判定は描画側が isDown() を毎フレーム読む。
         containerPeek = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 CONTAINER_PEEK_KEY,
-                InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_Z,
+                KEY_TYPE,
+                InputConstants.KEY_Z,
                 CATEGORY));
 
         ClientTickEvents.END_CLIENT_TICK.register(ClientKeyBindings::onTick);
@@ -293,7 +300,7 @@ public final class ClientKeyBindings {
         if (slotLockHeldKey < 0)
             return;
         var win = mc.getWindow();
-        if (win == null || !InputConstants.isKeyDown(win, slotLockHeldKey))
+        if (win == null || !InputCompat.isKeyDown(win, slotLockHeldKey))
             slotLockHeldKey = -1;
     }
 
@@ -335,7 +342,7 @@ public final class ClientKeyBindings {
         try {
             if (toggleSlotLock != null && toggleSlotLock.isUnbound()) {
                 toggleSlotLock.setKey(InputConstants.Type.MOUSE
-                        .getOrCreate(GLFW.GLFW_MOUSE_BUTTON_MIDDLE));
+                        .getOrCreate(InputConstants.MOUSE_BUTTON_MIDDLE));
                 KeyMapping.resetMapping();
                 if (mc.options != null)
                     mc.options.save();
@@ -450,9 +457,9 @@ public final class ClientKeyBindings {
                 altCEnabled = true;
             }
             var winC = mc.getWindow();
-            boolean altDownC = InputConstants.isKeyDown(winC, InputConstants.KEY_LALT)
-                    || InputConstants.isKeyDown(winC, InputConstants.KEY_RALT);
-            boolean cDown = InputConstants.isKeyDown(winC, GLFW.GLFW_KEY_C);
+            boolean altDownC = InputCompat.isKeyDown(winC, InputConstants.KEY_LALT)
+                    || InputCompat.isKeyDown(winC, InputConstants.KEY_RALT);
+            boolean cDown = InputCompat.isKeyDown(winC, InputConstants.KEY_C);
             boolean nowDown = altDownC && cDown;
             // 文字入力中は抑止する。 GLFW 生ポーリングは Screen の有無に関係なく毎 tick 走るため、
             // テキスト欄に打っている最中でも条件が揃えば発火してしまう (= タイプ中に別メニューが開く)。
@@ -478,9 +485,9 @@ public final class ClientKeyBindings {
             // InputConstants.isKeyDown は Window オブジェクトを直接受け取る (= 既存パターンと一致。
             // SortButtonWidget.java 等で同じ呼び方が成立済み)。
             var win = mc.getWindow();
-            boolean altDown = InputConstants.isKeyDown(win, InputConstants.KEY_LALT)
-                    || InputConstants.isKeyDown(win, InputConstants.KEY_RALT);
-            boolean dDown = InputConstants.isKeyDown(win, GLFW.GLFW_KEY_D);
+            boolean altDown = InputCompat.isKeyDown(win, InputConstants.KEY_LALT)
+                    || InputCompat.isKeyDown(win, InputConstants.KEY_RALT);
+            boolean dDown = InputCompat.isKeyDown(win, InputConstants.KEY_D);
             boolean nowDown = altDown && dDown;
             // screen == null ガードで既にテキスト入力中は除外されるが、 「生ポーリングの
             // ホットキーは TextInputState を必ず参照する」 という規則を明示的に守る。

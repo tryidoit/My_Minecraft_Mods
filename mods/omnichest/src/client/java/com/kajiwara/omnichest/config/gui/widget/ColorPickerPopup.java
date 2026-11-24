@@ -1,12 +1,12 @@
 package com.kajiwara.omnichest.config.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.i18n.Keys;
 import com.kajiwara.omnichest.i18n.OmniChestLocale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.function.IntConsumer;
 
@@ -322,7 +322,7 @@ public final class ColorPickerPopup implements OverlayPopup {
 
     public boolean mouseClicked(double mx, double my, int button) {
         reflow(); // 入力判定前に再センタリング → 描画と同じ座標系でヒットテスト。
-        if (button != 0) return false;
+        if (button != InputConstants.MOUSE_BUTTON_LEFT) return false;
         if (!isInside(mx, my)) {
             // ポップアップ外クリック: Cancel と同等。
             this.closed = true;
@@ -363,7 +363,7 @@ public final class ColorPickerPopup implements OverlayPopup {
 
     public boolean mouseDragged(double mx, double my, int button, double dx, double dy) {
         reflow(); // ドラッグ中にリサイズされても SV/Hue の相対座標計算を生きた中央基準に保つ。
-        if (button != 0) return false;
+        if (button != InputConstants.MOUSE_BUTTON_LEFT) return false;
         if (this.drag == Drag.SV) {
             updateSv(mx, my);
             return true;
@@ -376,7 +376,7 @@ public final class ColorPickerPopup implements OverlayPopup {
     }
 
     public boolean mouseReleased(double mx, double my, int button) {
-        if (button == 0 && this.drag != Drag.NONE) {
+        if (button == InputConstants.MOUSE_BUTTON_LEFT && this.drag != Drag.NONE) {
             this.drag = Drag.NONE;
             return true;
         }
@@ -384,11 +384,11 @@ public final class ColorPickerPopup implements OverlayPopup {
     }
 
     public boolean keyPressed(int key) {
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if (key == InputConstants.KEY_ESCAPE) {
             this.closed = true;
             return true;
         }
-        if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
+        if (key == InputConstants.KEY_RETURN || key == InputConstants.KEY_NUMPADENTER) {
             commit();
             return true;
         }

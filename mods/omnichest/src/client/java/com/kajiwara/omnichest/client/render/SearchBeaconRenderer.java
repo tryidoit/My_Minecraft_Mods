@@ -1,18 +1,46 @@
 package com.kajiwara.omnichest.client.render;
 
 import com.kajiwara.omnichest.mixin.RenderTypeAccessor;
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.BlendFunction;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.BlendFunction;
+//?}
 //? if >=26.1 {
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.ColorTargetState;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.ColorTargetState;
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.DepthStencilState;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.DepthStencilState;
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.CompareOp;*/
+//?} else {
 import com.mojang.blaze3d.platform.CompareOp;
 //?}
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.RenderPipeline;*/
+//?} else {
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+//?}
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.pipeline.UniformType;*/
+//?} else {
 import com.mojang.blaze3d.shaders.UniformType;
+//?}
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+//? if >=26.3 {
+/*import com.mojang.renderpearl.api.vertex.VertexFormat;*/
+//?} else {
 import com.mojang.blaze3d.vertex.VertexFormat;
+//?}
 //? if <26.2 {
 import net.minecraft.client.renderer.MultiBufferSource;
 //?}

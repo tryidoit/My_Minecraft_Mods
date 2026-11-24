@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.distribution.ui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.classify.StorageCategory;
 import com.kajiwara.omnichest.client.gui.CategoryBadgeRenderer;
 import com.kajiwara.omnichest.client.gui.search.layout.ThemeColorResolver;
@@ -20,7 +21,6 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -469,7 +469,7 @@ public final class DistributePreviewScreen extends Screen {
             return true;
         }
         // 送り先トリガのクリック → ドロップダウンを開く (複数のときのみ)。
-        if (!preview.isEmpty() && multiDest() && event.button() == 0
+        if (!preview.isEmpty() && multiDest() && event.button() == InputConstants.MOUSE_BUTTON_LEFT
                 && mx >= rightX && mx < rightX + PANEL_W
                 && my >= triggerY() && my < triggerY() + NAME_ROW_H) {
             openDestinationDropdown();
@@ -513,11 +513,11 @@ public final class DistributePreviewScreen extends Screen {
             return true; // popup 中は他キーを画面へ流さない。
         }
         int key = event.key();
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if (key == InputConstants.KEY_ESCAPE) {
             onClose();
             return true;
         }
-        if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
+        if (key == InputConstants.KEY_RETURN || key == InputConstants.KEY_NUMPADENTER) {
             // empty-state では Distribute が無いので Enter も 「戻る」 に倒す (= 出している操作と一致)。
             if (preview.isEmpty()) {
                 onClose();

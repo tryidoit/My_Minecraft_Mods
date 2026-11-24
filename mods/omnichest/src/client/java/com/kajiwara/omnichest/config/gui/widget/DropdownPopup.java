@@ -1,10 +1,10 @@
 package com.kajiwara.omnichest.config.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -215,7 +215,7 @@ public final class DropdownPopup<E> implements OverlayPopup {
 
     @Override
     public boolean mouseClicked(double mx, double my, int button) {
-        if (button != 0) {
+        if (button != InputConstants.MOUSE_BUTTON_LEFT) {
             // 右クリックや中クリックは popup を閉じるだけ (= 選択はしない)。
             this.closed = true;
             return true;
@@ -271,7 +271,7 @@ public final class DropdownPopup<E> implements OverlayPopup {
 
     @Override
     public boolean keyPressed(int key) {
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if (key == InputConstants.KEY_ESCAPE) {
             this.closed = true;
             return true;
         }

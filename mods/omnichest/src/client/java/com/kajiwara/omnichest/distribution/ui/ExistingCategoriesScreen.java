@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.distribution.ui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.classify.StorageCategory;
 import com.kajiwara.omnichest.client.gui.CategoryBadgeRenderer;
 import com.kajiwara.omnichest.client.gui.ScreenBackdrop;
@@ -15,7 +16,6 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,7 +203,7 @@ public final class ExistingCategoriesScreen extends Screen {
             return true;    // Back ボタンなどの widget が先
         }
         ExistingCategoriesFit.Layout l = this.layout;
-        if (event.button() == 0 && l != null && l.isOverScrollbar(event.x(), event.y())) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && l != null && l.isOverScrollbar(event.x(), event.y())) {
             this.draggingScroll = true;
             this.scrollPx = l.clampScroll(l.scrollFromMouseY(event.y()));
             return true;
@@ -223,7 +223,7 @@ public final class ExistingCategoriesScreen extends Screen {
 
     @Override
     public boolean mouseReleased(MouseButtonEvent event) {
-        if (event.button() == 0) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             this.draggingScroll = false;
         }
         return super.mouseReleased(event);
@@ -231,7 +231,7 @@ public final class ExistingCategoriesScreen extends Screen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.key() == InputConstants.KEY_ESCAPE) {
             onClose();
             return true;
         }

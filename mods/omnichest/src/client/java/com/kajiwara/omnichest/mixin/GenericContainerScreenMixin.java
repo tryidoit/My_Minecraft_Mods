@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.mixin;
 
+import com.kajiwara.omnichest.client.compat.InputCompat;
 import com.kajiwara.omnichest.catsort.engine.CategorySortEngine;
 import com.kajiwara.omnichest.catsort.ui.SortButtonWidget;
 import com.kajiwara.omnichest.chestsearch.ChestSearchQuery;
@@ -1074,8 +1075,8 @@ public abstract class GenericContainerScreenMixin extends Screen implements Omni
                         Minecraft mc = Minecraft.getInstance();
                         // Shift キー判定は InputConstants 経由で直接確認する (Mojang Mappings 環境差を回避)。
                         var window = mc.getWindow();
-                        boolean shift = InputConstants.isKeyDown(window, InputConstants.KEY_LSHIFT)
-                                || InputConstants.isKeyDown(window, InputConstants.KEY_RSHIFT);
+                        boolean shift = InputCompat.isKeyDown(window, InputConstants.KEY_LSHIFT)
+                                || InputCompat.isKeyDown(window, InputConstants.KEY_RSHIFT);
                         // プレイヤーインベントリも圧縮するか: Shift 押下 OR 設定 compactPlayerInventory が ON。
                         boolean alsoPlayer = shift || ConfigManager.get().compact.compactPlayerInventory;
                         if (alsoPlayer) {

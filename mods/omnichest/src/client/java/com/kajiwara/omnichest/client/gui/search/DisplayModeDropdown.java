@@ -1,12 +1,12 @@
 package com.kajiwara.omnichest.client.gui.search;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.client.gui.search.layout.UILayoutMetrics;
 import com.kajiwara.omnichest.i18n.RTLLayoutManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
 
@@ -127,7 +127,7 @@ public final class DisplayModeDropdown {
     }
 
     public boolean mouseClicked(double mx, double my, int button) {
-        if (button != 0) {
+        if (button != InputConstants.MOUSE_BUTTON_LEFT) {
             this.closed = true;
             return true;
         }
@@ -147,7 +147,7 @@ public final class DisplayModeDropdown {
     }
 
     public boolean keyPressed(int key) {
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if (key == InputConstants.KEY_ESCAPE) {
             this.closed = true;
             return true;
         }

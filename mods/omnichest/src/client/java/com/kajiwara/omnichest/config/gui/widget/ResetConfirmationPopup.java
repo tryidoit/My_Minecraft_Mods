@@ -1,12 +1,12 @@
 package com.kajiwara.omnichest.config.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.i18n.Keys;
 import com.kajiwara.omnichest.i18n.OmniChestLocale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
 
 /**
  * 「設定を本当にリセットしますか？」 を尋ねる確認 Popup。
@@ -224,7 +224,7 @@ public final class ResetConfirmationPopup implements OverlayPopup {
         if (this.list.mouseClicked(mx, my, button)) {
             return true;
         }
-        if (button == 0) {
+        if (button == InputConstants.MOUSE_BUTTON_LEFT) {
             int by = L.buttonY;
             int bw = PopupLayoutManager.BUTTON_W;
             int bh = PopupLayoutManager.BUTTON_H;
@@ -277,11 +277,11 @@ public final class ResetConfirmationPopup implements OverlayPopup {
 
     @Override
     public boolean keyPressed(int key) {
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if (key == InputConstants.KEY_ESCAPE) {
             this.closed = true; // Esc = いいえ / 戻る。
             return true;
         }
-        if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
+        if (key == InputConstants.KEY_RETURN || key == InputConstants.KEY_NUMPADENTER) {
             // 変更なしモードでは Enter も「戻る」 (= 確認するリセットが無いため)。
             if (this.list.isEmpty()) {
                 this.closed = true;

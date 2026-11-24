@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.config.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.config.gui.widget.ColorPickerPopup;
 import com.kajiwara.omnichest.config.gui.widget.ControlSize;
 import com.kajiwara.omnichest.config.gui.widget.DropdownPopup;
@@ -26,7 +27,6 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1081,18 +1081,18 @@ public final class OmniChestSettingsScreen extends Screen {
         }
 
         // ─── サイドバー縦スクロールバー ───
-        if (event.button() == 0 && isOverSidebarVScrollbar(mx, my)) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isOverSidebarVScrollbar(mx, my)) {
             startSidebarVDrag(my);
             return true;
         }
         // ─── サイドバー横スクロールバー ───
-        if (event.button() == 0 && isOverSidebarHScrollbar(mx, my)) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isOverSidebarHScrollbar(mx, my)) {
             startSidebarHDrag(mx);
             return true;
         }
         // ─── コンテンツ領域 (右端) 縦スクロールバー ───
         // widget 群より <b>先に</b> 判定して、 右端の widget とスクロールバーの当たり判定衝突を防ぐ。
-        if (event.button() == 0 && isOverContentVScrollbar(mx, my)) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isOverContentVScrollbar(mx, my)) {
             startContentVDrag(my);
             return true;
         }
@@ -1168,7 +1168,7 @@ public final class OmniChestSettingsScreen extends Screen {
             this.activePopup.mouseReleased(event.x(), event.y(), event.button());
             return true;
         }
-        if (event.button() == 0) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             this.draggingSidebarV = false;
             this.draggingSidebarH = false;
             this.draggingContentV = false;
@@ -1218,7 +1218,7 @@ public final class OmniChestSettingsScreen extends Screen {
             }
             return true; // ポップアップ中は他のキーも通常画面へ渡さない。
         }
-        if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.key() == InputConstants.KEY_ESCAPE) {
             //? if >=26.2 {
             /*Minecraft.getInstance().setScreenAndShow(this.parent);*/
             //?} else {

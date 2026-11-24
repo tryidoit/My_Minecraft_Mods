@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.config.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.i18n.Keys;
 import com.kajiwara.omnichest.i18n.OmniChestLocale;
 import net.minecraft.client.Minecraft;
@@ -255,7 +256,7 @@ public final class ScrollableSettingsList {
 
     /** スクロールバー thumb を掴んだか判定し、 掴んだら drag を開始する。 */
     public boolean mouseClicked(double mx, double my, int button) {
-        if (button != 0) return false;
+        if (button != InputConstants.MOUSE_BUTTON_LEFT) return false;
         int viewportH = this.vpBottom - this.vpTop;
         int total = totalContentHeight();
         if (total <= viewportH) return false;
@@ -276,7 +277,7 @@ public final class ScrollableSettingsList {
     }
 
     public boolean mouseDragged(double mx, double my, int button) {
-        if (!this.draggingThumb || button != 0) return false;
+        if (!this.draggingThumb || button != InputConstants.MOUSE_BUTTON_LEFT) return false;
         int viewportH = this.vpBottom - this.vpTop;
         int total = totalContentHeight();
         int thumbH = Math.max(20, (int) ((double) viewportH / total * viewportH));

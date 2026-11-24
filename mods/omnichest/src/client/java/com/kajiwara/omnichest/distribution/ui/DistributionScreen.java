@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.distribution.ui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.kajiwara.omnichest.classify.StorageCategory;
 import com.kajiwara.omnichest.client.gui.search.LargeIconRenderer;
 import com.kajiwara.omnichest.client.gui.search.layout.ThemeColorResolver;
@@ -31,7 +32,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -507,7 +507,7 @@ public final class DistributionScreen extends Screen {
         double my = event.y();
 
         // タブクリック。
-        if (event.button() == 0 && mx >= tabX && mx < tabX + tabW && my >= tabTop && my < tabBottom) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && mx >= tabX && mx < tabX + tabW && my >= tabTop && my < tabBottom) {
             int cell = UILayoutMetrics.TAB_HEIGHT;
             int gap = UILayoutMetrics.TAB_GAP;
             int y = tabTop - (int) tabScrollPx;
@@ -527,7 +527,7 @@ public final class DistributionScreen extends Screen {
         }
 
         // スクロールバードラッグ開始。
-        if (event.button() == 0 && isOverScrollbar(mx, my)) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && isOverScrollbar(mx, my)) {
             this.draggingScroll = true;
             this.scrollDragOffsetY = 0;
             setScrollFromMouse(my);
@@ -547,7 +547,7 @@ public final class DistributionScreen extends Screen {
 
     @Override
     public boolean mouseReleased(MouseButtonEvent event) {
-        if (event.button() == 0) {
+        if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
             draggingScroll = false;
         }
         return super.mouseReleased(event);
@@ -605,7 +605,7 @@ public final class DistributionScreen extends Screen {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        if (event.key() == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.key() == InputConstants.KEY_ESCAPE) {
             onClose();
             return true;
         }

@@ -1,5 +1,6 @@
 package com.kajiwara.omnichest.catsort.ui;
 
+import com.kajiwara.omnichest.client.compat.InputCompat;
 import com.kajiwara.omnichest.catsort.engine.CategorySortEngine;
 import com.kajiwara.omnichest.i18n.Keys;
 import com.kajiwara.omnichest.i18n.OmniChestLocale;
@@ -57,8 +58,8 @@ public final class SortButtonWidget {
     /** クリックハンドラ。 Shift 押下時の挙動分岐はここで吸収する。 */
     private static void onPress(AbstractContainerMenu menu, int containerSlotCount) {
         Minecraft mc = Minecraft.getInstance();
-        boolean shift = InputConstants.isKeyDown(mc.getWindow(), InputConstants.KEY_LSHIFT)
-                || InputConstants.isKeyDown(mc.getWindow(), InputConstants.KEY_RSHIFT);
+        boolean shift = InputCompat.isKeyDown(mc.getWindow(), InputConstants.KEY_LSHIFT)
+                || InputCompat.isKeyDown(mc.getWindow(), InputConstants.KEY_RSHIFT);
         // Shift の有無で「現状は同一動作」 だが、 拡張用に分岐構造だけ用意してある。
         // 例: Shift = 強制 compact (= autoCompactAfterSort=false でも 1 度だけ走らせる) 等。
         if (shift) {
